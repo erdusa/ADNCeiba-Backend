@@ -2,6 +2,7 @@ package com.ceiba.reserva.modelo.entidad;
 
 import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.cliente.modelo.entidad.Cliente;
+import com.ceiba.reserva.enums.EnumEstadoReserva;
 import lombok.Getter;
 
 import java.time.DayOfWeek;
@@ -27,6 +28,7 @@ public class Reserva {
     private LocalDateTime fechaInicial;
     private LocalDateTime fechaFinal;
     private Double valor;
+    private EnumEstadoReserva estado;
 
     public Reserva(Long id, Cliente cliente, Carro carro, LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         validarObligatorio(cliente, DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
@@ -45,6 +47,7 @@ public class Reserva {
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
         this.valor = this.calcularValor();
+        this.estado = EnumEstadoReserva.VIGENTE;
     }
 
     private void validarMaximo7DiasReserva(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
@@ -75,5 +78,4 @@ public class Reserva {
     private double incrementarPorcentajeAValor(double valor, double porcentaje) {
         return valor + valor * porcentaje / 100;
     }
-
 }

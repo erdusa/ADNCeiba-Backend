@@ -17,9 +17,9 @@ public interface RepositorioReserva {
     /**
      * Permite cancelar una reserva
      *
-     * @param idReserva identificador de la reserva a cancelar
+     * @param reserva reserva a cancelar
      */
-    void cancelar(Long idReserva);
+    void cancelar(Reserva reserva);
 
     /**
      * Permite consultar la reserva por el identificador
@@ -37,5 +37,5 @@ public interface RepositorioReserva {
      * @param fechaFinal   fecha final solicitada para la reserva
      * @return true si ya está reservado
      */
-    boolean estaCarroReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
+    boolean verificarSiCarroEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
 }

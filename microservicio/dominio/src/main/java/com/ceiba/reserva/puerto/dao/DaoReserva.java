@@ -1,7 +1,7 @@
 package com.ceiba.reserva.puerto.dao;
 
+import com.ceiba.carro.enums.EnumGama;
 import com.ceiba.carro.modelo.dto.DtoCarro;
-import com.ceiba.reserva.enums.EnumGama;
 import com.ceiba.reserva.modelo.dto.DtoReserva;
 
 import java.time.LocalDate;

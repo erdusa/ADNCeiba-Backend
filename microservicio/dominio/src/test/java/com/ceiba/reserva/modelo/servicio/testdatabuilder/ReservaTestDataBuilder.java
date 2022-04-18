@@ -1,11 +1,10 @@
 package com.ceiba.reserva.modelo.servicio.testdatabuilder;
 
+import com.ceiba.carro.enums.EnumGama;
 import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.cliente.modelo.entidad.Cliente;
-import com.ceiba.reserva.enums.EnumGama;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ReservaTestDataBuilder {

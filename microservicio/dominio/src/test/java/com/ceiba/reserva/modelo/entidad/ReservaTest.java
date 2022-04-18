@@ -1,18 +1,18 @@
 package com.ceiba.reserva.modelo.entidad;
 
 import com.ceiba.BasePrueba;
+import com.ceiba.carro.enums.EnumGama;
 import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
-import com.ceiba.reserva.enums.EnumGama;
 import com.ceiba.reserva.modelo.servicio.testdatabuilder.ReservaTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReservaTest {
 
@@ -50,7 +50,7 @@ class ReservaTest {
     void deberiaFallarSinClienteId() {
         // arrange
         ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder()
-                .conCliente(new Cliente(null, null,null));
+                .conCliente(new Cliente(null, null, null));
         //act-assert
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
@@ -72,7 +72,7 @@ class ReservaTest {
     @Test
     void deberiaFallarSinCarroId() {
         // arrange
-        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conCarro(new Carro(null, null, null,null, null));
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conCarro(new Carro(null, null, null, null, null));
         //act-assert
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
@@ -180,7 +180,7 @@ class ReservaTest {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(2);
-        Carro carro = new Carro(1L,"",0,"", EnumGama.MEDIA);
+        Carro carro = new Carro(1L, "", 0, "", EnumGama.MEDIA);
         // act
         Reserva reserva = new ReservaTestDataBuilder()
                 .conCarro(carro)
@@ -197,7 +197,7 @@ class ReservaTest {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(3);
-        Carro carro = new Carro(1L,"",0,"", EnumGama.BAJA);
+        Carro carro = new Carro(1L, "", 0, "", EnumGama.BAJA);
         // act
         Reserva reserva = new ReservaTestDataBuilder()
                 .conCarro(carro)
@@ -229,7 +229,7 @@ class ReservaTest {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(7);
-        Carro carro = new Carro(1L,"",0,"", EnumGama.MEDIA);
+        Carro carro = new Carro(1L, "", 0, "", EnumGama.MEDIA);
         // act
         Reserva reserva = new ReservaTestDataBuilder()
                 .conCarro(carro)
@@ -246,7 +246,7 @@ class ReservaTest {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(6);
-        Carro carro = new Carro(1L,"",0,"", EnumGama.BAJA);
+        Carro carro = new Carro(1L, "", 0, "", EnumGama.BAJA);
         // act
         Reserva reserva = new ReservaTestDataBuilder()
                 .conCarro(carro)

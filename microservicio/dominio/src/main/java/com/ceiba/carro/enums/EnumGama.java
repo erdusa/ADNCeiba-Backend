@@ -1,4 +1,4 @@
-package com.ceiba.reserva.enums;
+package com.ceiba.carro.enums;
 
 public enum EnumGama {
 

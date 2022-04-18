@@ -1,6 +1,6 @@
 package com.ceiba.carro.modelo.entidad;
 
-import com.ceiba.reserva.enums.EnumGama;
+import com.ceiba.carro.enums.EnumGama;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

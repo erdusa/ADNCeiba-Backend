@@ -7,10 +7,9 @@ import com.ceiba.reserva.modelo.servicio.testdatabuilder.ReservaTestDataBuilder;
 import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServicioCrearReservaTest {
 
@@ -27,7 +26,7 @@ class ServicioCrearReservaTest {
     void deberiaCrearLaReservaCorrectamente() {
         //arrange
         Reserva reserva = new ReservaTestDataBuilder().build();
-        Mockito.when(repositorioReserva.estaCarroReservado(Mockito.anyLong(), Mockito.any(), Mockito.any()))
+        Mockito.when(repositorioReserva.verificarSiCarroEstaReservado(Mockito.anyLong(), Mockito.any(), Mockito.any()))
                 .thenReturn(false);
         Mockito.when(repositorioReserva.crear(reserva)).thenReturn(100L);
         // act
@@ -37,7 +36,7 @@ class ServicioCrearReservaTest {
         Mockito.verify(repositorioReserva, Mockito.times(1))
                 .crear(reserva);
         Mockito.verify(repositorioReserva, Mockito.times(1))
-                .estaCarroReservado(Mockito.anyLong(), Mockito.any(), Mockito.any());
+                .verificarSiCarroEstaReservado(Mockito.anyLong(), Mockito.any(), Mockito.any());
 
     }
 
@@ -45,14 +44,14 @@ class ServicioCrearReservaTest {
     void deberiaLanzarErrorSiCarroYaEstaReservado() {
         //arrange
         Reserva reserva = new ReservaTestDataBuilder().build();
-        Mockito.when(repositorioReserva.estaCarroReservado(Mockito.anyLong(), Mockito.any(), Mockito.any()))
+        Mockito.when(repositorioReserva.verificarSiCarroEstaReservado(Mockito.anyLong(), Mockito.any(), Mockito.any()))
                 .thenReturn(true);
         // act - assert
-        BasePrueba.assertThrows(()-> servicioCrearReserva.ejecutar(reserva), ExcepcionDuplicidad.class,
+        BasePrueba.assertThrows(() -> servicioCrearReserva.ejecutar(reserva), ExcepcionDuplicidad.class,
                 ServicioCrearReserva.EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS);
         Mockito.verify(repositorioReserva, Mockito.times(0))
                 .crear(reserva);
         Mockito.verify(repositorioReserva, Mockito.times(1))
-                .estaCarroReservado(Mockito.anyLong(), Mockito.any(), Mockito.any());
+                .verificarSiCarroEstaReservado(Mockito.anyLong(), Mockito.any(), Mockito.any());
     }
 }

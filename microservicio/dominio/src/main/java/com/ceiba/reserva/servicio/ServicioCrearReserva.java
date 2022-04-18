@@ -19,7 +19,7 @@ public class ServicioCrearReserva {
     }
 
     private void validarCarroReservado(Reserva reserva) {
-        boolean carroYaReservado = repositorioReserva.estaCarroReservado(reserva.getCarro().getId(), reserva.getFechaInicial().toLocalDate(), reserva.getFechaFinal().toLocalDate());
+        boolean carroYaReservado = repositorioReserva.verificarSiCarroEstaReservado(reserva.getCarro().getId(), reserva.getFechaInicial().toLocalDate(), reserva.getFechaFinal().toLocalDate());
         if (carroYaReservado) {
             throw new ExcepcionDuplicidad(EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS);
         }

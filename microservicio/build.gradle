@@ -45,15 +45,7 @@ allprojects {
 	configurations {
 		runtime.exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	
-	configurations.all {
-		resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-			if (details.requested.group == 'org.apache.logging.log4j') {
-				details.useVersion '2.16.0'
-			}
-		}
-	}
-	
+
 	project.ext.springtxt = [
 							  	"org.springframework:spring-tx:${springVersion}",
 							  	"org.springframework:spring-context:${springVersion}"

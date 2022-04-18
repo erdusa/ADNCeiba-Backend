@@ -1,7 +1,7 @@
 package com.ceiba.reserva.servicio;
 
 import com.ceiba.BasePrueba;
-import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
+import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 import com.ceiba.reserva.modelo.servicio.testdatabuilder.ReservaTestDataBuilder;
@@ -36,7 +36,20 @@ class ServicioCancelarReservaTest {
         servicioCancelarReserva.ejecutar(Mockito.anyLong());
         // assert
         Mockito.verify(repositorioReserva, Mockito.times(1))
-                .cancelar(Mockito.anyLong());
+                .cancelar(Mockito.any());
+        Mockito.verify(repositorioReserva, Mockito.times(1))
+                .consultar(Mockito.anyLong());
+    }
+
+    @Test
+    void deberiaLanzarErrorSiNoExisteLaReserva() {
+        //arrange
+        Mockito.when(repositorioReserva.consultar(Mockito.anyLong())).thenReturn(null);
+        // act - assert
+        BasePrueba.assertThrows(() -> servicioCancelarReserva.ejecutar(Mockito.anyLong()), ExcepcionSinDatos.class,
+                ServicioCancelarReserva.NO_EXISTE_LA_RESERVA_PARA_EL_ID_PROPORCIONADO);
+        Mockito.verify(repositorioReserva, Mockito.times(0))
+                .cancelar(Mockito.any());
         Mockito.verify(repositorioReserva, Mockito.times(1))
                 .consultar(Mockito.anyLong());
     }
@@ -51,10 +64,10 @@ class ServicioCancelarReservaTest {
                 .build();
         Mockito.when(repositorioReserva.consultar(Mockito.anyLong())).thenReturn(reserva);
         // act - assert
-        BasePrueba.assertThrows(()-> servicioCancelarReserva.ejecutar(Mockito.anyLong()), ExcepcionValorInvalido.class,
+        BasePrueba.assertThrows(() -> servicioCancelarReserva.ejecutar(Mockito.anyLong()), ExcepcionValorInvalido.class,
                 ServicioCancelarReserva.SOLO_SE_PUEDE_CANCELAR_LA_RESERVA_2_DIAS_ANTES_Y_MAXIMO_HASTA_LAS_7_PM);
         Mockito.verify(repositorioReserva, Mockito.times(0))
-                .cancelar(1L);
+                .cancelar(reserva);
         Mockito.verify(repositorioReserva, Mockito.times(1))
                 .consultar(Mockito.anyLong());
     }

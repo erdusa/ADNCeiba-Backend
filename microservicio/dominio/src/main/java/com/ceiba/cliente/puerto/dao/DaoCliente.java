@@ -1,6 +1,6 @@
 package com.ceiba.cliente.puerto.dao;
 
-import com.ceiba.cliente.modelo.entidad.Cliente;
+import com.ceiba.cliente.modelo.dto.DtoCliente;
 
 public interface DaoCliente {
 
@@ -10,5 +10,5 @@ public interface DaoCliente {
      * @param documento documento a consultar
      * @return el cliente consultado
      */
-    Cliente consultarPorDocumento(String documento);
+    DtoCliente consultarPorDocumento(String documento);
 }
