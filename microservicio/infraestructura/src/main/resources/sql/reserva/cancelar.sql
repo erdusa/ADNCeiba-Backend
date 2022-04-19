@@ -1,3 +1,3 @@
-UPDATE public.reserva
-SET reseestado='SALDADA'
-WHERE reseid=:id;
+UPDATE reserva
+SET estado = 'SALDADA'
+WHERE id = :id;

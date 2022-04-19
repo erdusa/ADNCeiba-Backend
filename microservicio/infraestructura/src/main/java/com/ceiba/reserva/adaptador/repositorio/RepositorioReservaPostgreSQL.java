@@ -1,15 +1,19 @@
 package com.ceiba.reserva.adaptador.repositorio;
 
+import com.ceiba.carro.adaptador.repositorio.MapeoCarro;
+import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
 import com.ceiba.reserva.modelo.entidad.Reserva;
+import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
 @Repository
-public class RepositorioReservaPostgreSQL implements com.ceiba.reserva.puerto.repositorio.RepositorioReserva {
+public class RepositorioReservaPostgreSQL implements RepositorioReserva {
 
     @SqlStatement(namespace = "reserva", value = "crear.sql")
     private static String sqlCrear;
@@ -17,8 +21,8 @@ public class RepositorioReservaPostgreSQL implements com.ceiba.reserva.puerto.re
     private static String sqlCancelar;
     @SqlStatement(namespace = "reserva", value = "consultar")
     private static String sqlConsultar;
-    @SqlStatement(namespace = "reserva", value = "verificarSiCarroEstaReservado")
-    private static String sqlVerificarSiCarroEstaReservado;
+    @SqlStatement(namespace = "reserva", value = "obtenerCarroSiNoEstaReservado")
+    private static String sqlObtenerCarroSiNoEstaReservado;
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
@@ -41,16 +45,19 @@ public class RepositorioReservaPostgreSQL implements com.ceiba.reserva.puerto.re
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("id", idReserva);
 
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlConsultar, paramSource, Reserva.class);
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlConsultar, paramSource, new MapeoReserva());
     }
 
     @Override
-    public boolean verificarSiCarroEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal) {
+    public Carro obtenerCarroSiNoEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("idCarro", idCarro);
         paramSource.addValue("fechainicial", fechaInicial);
         paramSource.addValue("fechafinal", fechaFinal);
-
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlVerificarSiCarroEstaReservado, paramSource, Boolean.class);
+        try {
+            return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerCarroSiNoEstaReservado, paramSource, new MapeoCarro());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.ceiba.reserva.puerto.repositorio;
 
+import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 
 import java.time.LocalDate;
@@ -30,12 +31,12 @@ public interface RepositorioReserva {
     Reserva consultar(Long idReserva);
 
     /**
-     * Permite verificar si un carro ya está reservado para las fechas dadas
+     * Obtiene los datos del carro siempre y cuando no esté reservado
      *
      * @param idCarro      identificador del carro
      * @param fechaInicial fecha inicial solicitada para la reserva
      * @param fechaFinal   fecha final solicitada para la reserva
-     * @return true si ya está reservado
+     * @return los datos del carro
      */
-    boolean verificarSiCarroEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
+    Carro obtenerCarroSiNoEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
 }

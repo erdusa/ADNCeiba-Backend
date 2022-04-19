@@ -1,15 +1,12 @@
 package com.ceiba.reserva.modelo.entidad;
 
 import com.ceiba.BasePrueba;
-import com.ceiba.carro.enums.EnumGama;
-import com.ceiba.carro.modelo.entidad.Carro;
-import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
-import com.ceiba.reserva.modelo.servicio.testdatabuilder.ReservaTestDataBuilder;
+import com.ceiba.reserva.enums.EnumEstadoReserva;
+import com.ceiba.reserva.servicio.testdatabuilder.ReservaTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,12 +24,11 @@ class ReservaTest {
                 .build();
         // assert
         assertEquals(1L, reserva.getId());
-        assertEquals(1L, reserva.getCliente().getId());
-        assertEquals(1L, reserva.getCarro().getId());
+        assertEquals(1L, reserva.getIdCliente());
+        assertEquals(1L, reserva.getIdCarro());
         assertEquals(fechaInicial, reserva.getFechaInicial());
         assertEquals(fechaInicial.plusDays(1), reserva.getFechaFinal());
-        assertEquals(100, reserva.getValor());
-
+        assertEquals(EnumEstadoReserva.VIGENTE.toString(), reserva.getEstado());
     }
 
     @Test
@@ -47,32 +43,9 @@ class ReservaTest {
     }
 
     @Test
-    void deberiaFallarSinClienteId() {
-        // arrange
-        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder()
-                .conCliente(new Cliente(null, null, null));
-        //act-assert
-        BasePrueba.assertThrows(() -> {
-                    reservaTestDataBuilder.build();
-                },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
-    }
-
-    @Test
     void deberiaFallarSinCarro() {
         // arrange
         ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conCarro(null);
-        //act-assert
-        BasePrueba.assertThrows(() -> {
-                    reservaTestDataBuilder.build();
-                },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
-    }
-
-    @Test
-    void deberiaFallarSinCarroId() {
-        // arrange
-        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conCarro(new Carro(null, null, null, null, null));
         //act-assert
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
@@ -138,11 +111,11 @@ class ReservaTest {
                 .build();
         //assert
         assertEquals(1L, reserva.getId());
-        assertEquals(1L, reserva.getCliente().getId());
-        assertEquals(1L, reserva.getCarro().getId());
+        assertEquals(1L, reserva.getIdCliente());
+        assertEquals(1L, reserva.getIdCarro());
         assertEquals(fechaInicial, reserva.getFechaInicial());
         assertEquals(fechaFinal, reserva.getFechaFinal());
-        assertEquals(720, reserva.getValor());
+        assertEquals(EnumEstadoReserva.VIGENTE.toString(), reserva.getEstado());
     }
 
     @Test
@@ -158,112 +131,6 @@ class ReservaTest {
                     reservaTestDataBuilder.build();
                 },
                 ExcepcionValorInvalido.class, Reserva.NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS);
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamAlta() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(5);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(500, reserva.getValor());
-
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamMedia() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(2);
-        Carro carro = new Carro(1L, "", 0, "", EnumGama.MEDIA);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conCarro(carro)
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(140, reserva.getValor());
-
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamBaja() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(3);
-        Carro carro = new Carro(1L, "", 0, "", EnumGama.BAJA);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conCarro(carro)
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(150, reserva.getValor());
-
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamAlta() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(7);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(720, reserva.getValor());
-
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamMedia() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(7);
-        Carro carro = new Carro(1L, "", 0, "", EnumGama.MEDIA);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conCarro(carro)
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(504, reserva.getValor());
-
-    }
-
-    @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamBaja() {
-        // arrange
-        LocalDateTime fechaInicial = obtenerFechaProximoLunes();
-        LocalDateTime fechaFinal = fechaInicial.plusDays(6);
-        Carro carro = new Carro(1L, "", 0, "", EnumGama.BAJA);
-        // act
-        Reserva reserva = new ReservaTestDataBuilder()
-                .conCarro(carro)
-                .conFechaInicial(fechaInicial)
-                .conFechaFinal(fechaFinal)
-                .build();
-
-        assertEquals(305, reserva.getValor());
-
-    }
-
-    private LocalDateTime obtenerFechaProximoLunes() {
-        LocalDateTime fecha = LocalDateTime.now();
-        while (!fecha.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
-            fecha = fecha.plusDays(1);
-        }
-        return fecha;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.ceiba.reserva.adaptador.dao;
 
-import com.ceiba.carro.adaptador.dao.MapeoCarro;
+import com.ceiba.carro.adaptador.dao.MapeoDtoCarro;
 import com.ceiba.carro.enums.EnumGama;
 import com.ceiba.carro.modelo.dto.DtoCarro;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
@@ -32,7 +32,7 @@ public class DaoReservaPostgreSQL implements DaoReserva {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("idCliente", idCliente);
 
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarPorCliente, paramSource, new MapeoReserva());
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarPorCliente, paramSource, new MapeoDtoReserva());
     }
 
     @Override
@@ -42,6 +42,6 @@ public class DaoReservaPostgreSQL implements DaoReserva {
         paramSource.addValue("fechafinal", fechaFinal);
         paramSource.addValue("gama", gama.toString());
 
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarCarrosDisponibles, paramSource, new MapeoCarro());
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarCarrosDisponibles, paramSource, new MapeoDtoCarro());
     }
 }

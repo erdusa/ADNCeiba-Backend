@@ -1,33 +1,33 @@
-create sequence IF NOT EXISTS cliente_seq;
+create sequence IF NOT EXISTS cliente_id_seq;
 CREATE TABLE IF NOT EXISTS cliente (
-	clieid int4 NOT NULL default nextval ('cliente_seq'),
-	cliedocumento varchar NOT NULL,
-	clienombre varchar NOT NULL,
-	PRIMARY KEY (clieid)
+	id int4 NOT NULL default nextval ('cliente_id_seq'),
+	documento varchar NOT NULL,
+	nombre varchar NOT NULL,
+	PRIMARY KEY (id)
 );
 
 create sequence IF NOT EXISTS carro_id_seq;
 CREATE TABLE IF NOT EXISTS carro (
-	carrid int4 NOT NULL DEFAULT nextval('carro_id_seq'),
-	carrmarca varchar NOT NULL,
-	carrmodelo int2 NOT NULL,
-	carrplaca varchar NOT NULL,
-	carrgama varchar NOT NULL,
-	CONSTRAINT carro_pk PRIMARY KEY (carrid)
+	id int4 NOT NULL DEFAULT nextval('carro_id_seq'),
+	marca varchar NOT NULL,
+	modelo int2 NOT NULL,
+	placa varchar NOT NULL,
+	gama varchar NOT NULL,
+	CONSTRAINT carro_pk PRIMARY KEY (id)
 );
 
 create sequence IF NOT EXISTS reserva_id_seq;
 CREATE TABLE IF NOT EXISTS reserva (
-	reseid int4 NOT NULL DEFAULT nextval('reserva_id_seq'),
+	id int4 NOT NULL DEFAULT nextval('reserva_id_seq'),
 	clieid int4 NOT NULL,
 	carrid int4 NOT NULL,
-	resefechainicial timestamp NOT NULL,
-	resefechafinal timestamp NOT NULL,
-	resevalor numeric(12, 2) NOT NULL,
-	reseestado varchar NOT NULL,
-	CONSTRAINT reserva_pk PRIMARY KEY (reseid),
+	fechainicial timestamp NOT NULL,
+	fechafinal timestamp NOT NULL,
+	valor numeric(12, 2) NOT NULL,
+	estado varchar NOT NULL,
+	CONSTRAINT reserva_pk PRIMARY KEY (id),
     FOREIGN KEY (carrid)
-        REFERENCES carro (carrid),
+        REFERENCES carro (id),
     FOREIGN KEY (clieid)
-        REFERENCES cliente (clieid)
+        REFERENCES cliente (id)
 );

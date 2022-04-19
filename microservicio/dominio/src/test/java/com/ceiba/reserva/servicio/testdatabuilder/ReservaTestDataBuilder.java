@@ -1,8 +1,5 @@
-package com.ceiba.reserva.modelo.servicio.testdatabuilder;
+package com.ceiba.reserva.servicio.testdatabuilder;
 
-import com.ceiba.carro.enums.EnumGama;
-import com.ceiba.carro.modelo.entidad.Carro;
-import com.ceiba.cliente.modelo.entidad.Cliente;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 
 import java.time.LocalDateTime;
@@ -10,27 +7,27 @@ import java.time.LocalDateTime;
 public class ReservaTestDataBuilder {
 
     private Long id;
-    private Cliente cliente;
-    private Carro carro;
+    private Long idCliente;
+    private Long idCarro;
     private LocalDateTime fechaInicial;
     private LocalDateTime fechaFinal;
 
     public ReservaTestDataBuilder() {
 
         this.id = 1L;
-        this.cliente = new Cliente(1L, "8000", "Eudis Rene Duarte");
-        this.carro = new Carro(1L, "Toyota", 2022, "MZF985", EnumGama.ALTA);
+        this.idCliente = 1L;
+        this.idCarro = 1L;
         this.fechaInicial = LocalDateTime.now();
         this.fechaFinal = fechaInicial.plusDays(1);
     }
 
-    public ReservaTestDataBuilder conCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public ReservaTestDataBuilder conCliente(Long idCliente) {
+        this.idCliente = idCliente;
         return this;
     }
 
-    public ReservaTestDataBuilder conCarro(Carro carro) {
-        this.carro = carro;
+    public ReservaTestDataBuilder conCarro(Long idCarro) {
+        this.idCarro = idCarro;
         return this;
     }
 
@@ -45,6 +42,6 @@ public class ReservaTestDataBuilder {
     }
 
     public Reserva build() {
-        return new Reserva(id, cliente, carro, fechaInicial, fechaFinal);
+        return new Reserva(id, idCliente, idCarro, fechaInicial, fechaFinal);
     }
 }

@@ -44,7 +44,7 @@ class ConsultaControladorReservaTest {
     }
 
     @Test
-    void deberiaListarLosCarrosDisponibles() throws Exception {
+    void deberiaListarLosCarrosGamaAltaDisponibles() throws Exception {
         // arrange
         // act - assert
         mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=20/04/2022&fechaFinal=22/04/2022&gama=ALTA")
@@ -61,6 +61,40 @@ class ConsultaControladorReservaTest {
                 .andExpect(jsonPath("$[1].modelo", is(2020)))
                 .andExpect(jsonPath("$[1].placa", is("347")))
                 .andExpect(jsonPath("$[1].gama", is("ALTA")))
+        ;
+
+    }
+
+    @Test
+    void deberiaListarLosCarrosGamaMediaDisponibles() throws Exception {
+        // arrange
+        // act - assert
+        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022&fechaFinal=20/04/2022&gama=MEDIA")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(3)))
+                .andExpect(jsonPath("$[0].marca", is("CHEVROLET")))
+                .andExpect(jsonPath("$[0].modelo", is(2022)))
+                .andExpect(jsonPath("$[0].placa", is("235")))
+                .andExpect(jsonPath("$[0].gama", is("MEDIA")))
+        ;
+
+    }
+
+    @Test
+    void deberiaListarLosCarrosGamaBajaDisponibles() throws Exception {
+        // arrange
+        // act - assert
+        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022&fechaFinal=20/04/2023&gama=BAJA")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].marca", is("RENAULT")))
+                .andExpect(jsonPath("$[0].modelo", is(2020)))
+                .andExpect(jsonPath("$[0].placa", is("123")))
+                .andExpect(jsonPath("$[0].gama", is("BAJA")))
         ;
 
     }

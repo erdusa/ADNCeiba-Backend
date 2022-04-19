@@ -1,19 +1,19 @@
 with carros_reservados
 as (
-	select ca.carrid
+	select ca.id
 	from reserva re
-	inner join carro ca using (carrid)
-	where carrgama = :gama
-	and reseestado = 'VIGENTE'
+	inner join carro ca on re.carrid = ca.id
+	where ca.gama = :gama
+	and re.estado = 'VIGENTE'
 	and (
-		:fechainicial between date_trunc('day', resefechainicial) and date_trunc('day', resefechafinal)
-		or  :fechafinal between date_trunc('day', resefechainicial) and date_trunc('day', resefechafinal)
-		or  date_trunc('day', resefechainicial)  between :fechainicial and :fechafinal
-		or  date_trunc('day', resefechafinal) between :fechainicial and :fechafinal
+		:fechainicial between date_trunc('day', re.fechainicial) and date_trunc('day', re.fechafinal)
+		or  :fechafinal between date_trunc('day', re.fechainicial) and date_trunc('day', re.fechafinal)
+		or  date_trunc('day', re.fechainicial)  between :fechainicial and :fechafinal
+		or  date_trunc('day', re.fechafinal) between :fechainicial and :fechafinal
 		)
 	)
 select *
 from carro c
-left join carros_reservados care using (carrid)
-where c.carrgama = :gama
-and care.carrid is null
+left join carros_reservados care using(id)
+where c.gama = :gama
+and care.id is null

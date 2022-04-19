@@ -1,21 +1,21 @@
 jasypt:
-   encryptor:
-      password: ${jasyptpwd:secretkey}
-      algorithm: PBEWithMD5AndDES
+  encryptor:
+    password: ${jasyptpwd:secretkey}
+    algorithm: PBEWithMD5AndDES
 
 server:
-   port: 8080
-   servlet:
-      context-path: /rentacar
-      session:
-         timeout: 21600s
+  port: 8080
+  servlet:
+    context-path: /rentacar
+    session:
+      timeout: 21600s
 
 spring:
-   datasource:
-      driver-class-name: org.postgresql.Driver
-      type: com.zaxxer.hikari.HikariDataSource
-      jdbcUrl: jdbc:postgresql://localhost:5432/rentacar
-      username: postgres
-      password: postgres650
-      hikari:
-         poolName: pool
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    jdbcUrl: jdbc:postgresql://localhost:5432/rentacar
+    username: postgres
+    password: postgres650
+    hikari:
+      poolName: pool

@@ -1,3 +1,3 @@
 SELECT *
 FROM cliente
-WHERE cliedocumento = :documento
+WHERE documento = :documento

@@ -23,6 +23,6 @@ public class DaoClientePostgreSQL implements DaoCliente {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("documento", documento);
 
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlConsultarCliente, paramSource, new MapeoCliente());
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlConsultarCliente, paramSource, new MapeoDtoCliente());
     }
 }
