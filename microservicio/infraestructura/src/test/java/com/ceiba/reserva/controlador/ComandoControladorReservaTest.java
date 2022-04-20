@@ -14,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,6 +43,22 @@ class ComandoControladorReservaTest {
                         .content(objectMapper.writeValueAsString(comandoReserva)))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'valor':4}"));
+    }
+
+    @Test
+    void deberiaGenerarErrorParaCarroReservado() throws Exception {
+        // arrange
+        ComandoReserva comandoReserva = new ComandoReservaTestDataBuilder()
+                .conIdCarro(2L)
+                .conFechaInicial(LocalDateTime.of(2022,4,20,7,0))
+                .conFechaFinal(LocalDateTime.of(2022,4,21,7,0))
+                .build();
+        // act -assert
+        mocMvc.perform(post("/reservas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(comandoReserva)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().json("{'mensaje':'El carro ya está reservado para las fechas seleccionadas'}"));
     }
 
     @Test

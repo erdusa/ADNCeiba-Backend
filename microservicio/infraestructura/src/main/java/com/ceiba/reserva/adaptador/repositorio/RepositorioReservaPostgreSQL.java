@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 @Repository
 public class RepositorioReservaPostgreSQL implements RepositorioReserva {
 
+    public static final String EL_CARRO_NO_ESTA_DISPONIBLE = "El carro no está disponible";
     @SqlStatement(namespace = "reserva", value = "crear.sql")
     private static String sqlCrear;
     @SqlStatement(namespace = "reserva", value = "cancelar.sql")
@@ -60,7 +61,7 @@ public class RepositorioReservaPostgreSQL implements RepositorioReserva {
         try {
             return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerCarroSiNoEstaReservado, paramSource, new MapeoCarro());
         } catch (EmptyResultDataAccessException e) {
-            LOGGER.log(Level.INFO, "El carro no está disponible", e);
+            LOGGER.log(Level.INFO, EL_CARRO_NO_ESTA_DISPONIBLE, e);
         }
         return null;
     }

@@ -20,6 +20,21 @@ public class ComandoReservaTestDataBuilder {
         this.fechaFinal = fechaInicial.plusDays(1);
     }
 
+    public ComandoReservaTestDataBuilder conIdCarro(Long idCarro) {
+        this.idCarro = idCarro;
+        return this;
+    }
+
+    public ComandoReservaTestDataBuilder conFechaInicial(LocalDateTime fechaInicial) {
+        this.fechaInicial = fechaInicial;
+        return this;
+    }
+
+    public ComandoReservaTestDataBuilder conFechaFinal(LocalDateTime fechaFinal) {
+        this.fechaFinal = fechaFinal;
+        return this;
+    }
+
     public ComandoReserva build() {
         return new ComandoReserva(
                 this.id,
