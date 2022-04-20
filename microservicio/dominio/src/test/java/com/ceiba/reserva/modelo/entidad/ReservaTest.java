@@ -13,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReservaTest {
 
+    public static final String DEBE_INGRESAR_UN_CLIENTE_EXISTENTE = "Debe ingresar un cliente existente";
+    public static final String DEBE_SELECCIONAR_UN_CARRO_EXISTENTE = "Debe seleccionar un carro existente";
+    public static final String DEBE_INGRESAR_LA_FECHA_INICIAL = "Debe ingresar la fecha inicial";
+    public static final String DEBE_INGRESAR_LA_FECHA_FINAL = "Debe ingresar la fecha final";
+    public static final String LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL = "La fecha inicial debe ser mayor a la fecha actual";
+    public static final String LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL = "La fecha inicial no puede ser mayor a la fecha final";
+    public static final String NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS = "No se puede hacer la reserva por mas de 7 días";
+    public static final String DEBE_INGRESAR_EL_VALOR = "Debe ingresar el valor";
+    public static final String EL_VALOR_DEBE_SER_MAYOR_QUE_CERO = "El valor debe ser mayor que cero";
+
     @Test
     void deberiaCrearCorrectamenteLaReserva() {
         // arrange
@@ -39,7 +49,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
+                ExcepcionValorObligatorio.class, DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
     }
 
     @Test
@@ -50,7 +60,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
+                ExcepcionValorObligatorio.class, DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
     }
 
     @Test
@@ -61,7 +71,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_INGRESAR_LA_FECHA_INICIAL);
+                ExcepcionValorObligatorio.class, DEBE_INGRESAR_LA_FECHA_INICIAL);
     }
 
     @Test
@@ -73,7 +83,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorInvalido.class, Reserva.LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL);
+                ExcepcionValorInvalido.class, LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL);
     }
 
     @Test
@@ -84,7 +94,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorObligatorio.class, Reserva.DEBE_INGRESAR_LA_FECHA_FINAL);
+                ExcepcionValorObligatorio.class, DEBE_INGRESAR_LA_FECHA_FINAL);
     }
 
     @Test
@@ -96,7 +106,7 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorInvalido.class, Reserva.LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL);
+                ExcepcionValorInvalido.class, LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL);
     }
 
     @Test
@@ -130,7 +140,43 @@ class ReservaTest {
         BasePrueba.assertThrows(() -> {
                     reservaTestDataBuilder.build();
                 },
-                ExcepcionValorInvalido.class, Reserva.NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS);
+                ExcepcionValorInvalido.class, NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS);
+    }
+
+    @Test
+    void deberiaFallarSiElValorEsNulo() {
+        // arrange
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder()
+                .conValor(null);
+        //act-assert
+        BasePrueba.assertThrows(() -> {
+                    reservaTestDataBuilder.build();
+                },
+                ExcepcionValorObligatorio.class, DEBE_INGRESAR_EL_VALOR);
+    }
+
+    @Test
+    void deberiaFallarSiElValorEsCero() {
+        // arrange
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder()
+                .conValor(0d);
+        //act-assert
+        BasePrueba.assertThrows(() -> {
+                    reservaTestDataBuilder.build();
+                },
+                ExcepcionValorInvalido.class, EL_VALOR_DEBE_SER_MAYOR_QUE_CERO);
+    }
+
+    @Test
+    void deberiaFallarSiElValorEsNegativo() {
+        // arrange
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder()
+                .conValor(-1d);
+        //act-assert
+        BasePrueba.assertThrows(() -> {
+                    reservaTestDataBuilder.build();
+                },
+                ExcepcionValorInvalido.class, EL_VALOR_DEBE_SER_MAYOR_QUE_CERO);
     }
 
 }

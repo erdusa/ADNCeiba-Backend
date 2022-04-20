@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 
 class ServicioCancelarReservaTest {
 
+    public static final String SOLO_SE_PUEDE_CANCELAR_LA_RESERVA_2_DIAS_ANTES_Y_MAXIMO_HASTA_LAS_7_PM = "Sólo se puede cancelar la reserva 2 días antes y máximo hasta las 7 PM";
+    public static final String NO_EXISTE_LA_RESERVA_PARA_EL_ID_PROPORCIONADO = "No existe la reserva para el id proporcionado";
+
     private RepositorioReserva repositorioReserva;
     private ServicioCancelarReserva servicioCancelarReserva;
 
@@ -47,7 +50,7 @@ class ServicioCancelarReservaTest {
         Mockito.when(repositorioReserva.consultar(Mockito.anyLong())).thenReturn(null);
         // act - assert
         BasePrueba.assertThrows(() -> servicioCancelarReserva.ejecutar(Mockito.anyLong()), ExcepcionSinDatos.class,
-                ServicioCancelarReserva.NO_EXISTE_LA_RESERVA_PARA_EL_ID_PROPORCIONADO);
+                NO_EXISTE_LA_RESERVA_PARA_EL_ID_PROPORCIONADO);
         Mockito.verify(repositorioReserva, Mockito.times(0))
                 .cancelar(Mockito.any());
         Mockito.verify(repositorioReserva, Mockito.times(1))
@@ -65,7 +68,7 @@ class ServicioCancelarReservaTest {
         Mockito.when(repositorioReserva.consultar(Mockito.anyLong())).thenReturn(reserva);
         // act - assert
         BasePrueba.assertThrows(() -> servicioCancelarReserva.ejecutar(Mockito.anyLong()), ExcepcionValorInvalido.class,
-                ServicioCancelarReserva.SOLO_SE_PUEDE_CANCELAR_LA_RESERVA_2_DIAS_ANTES_Y_MAXIMO_HASTA_LAS_7_PM);
+                SOLO_SE_PUEDE_CANCELAR_LA_RESERVA_2_DIAS_ANTES_Y_MAXIMO_HASTA_LAS_7_PM);
         Mockito.verify(repositorioReserva, Mockito.times(0))
                 .cancelar(reserva);
         Mockito.verify(repositorioReserva, Mockito.times(1))

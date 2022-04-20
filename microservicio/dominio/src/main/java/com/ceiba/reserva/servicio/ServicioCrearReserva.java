@@ -15,6 +15,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class ServicioCrearReserva {
 
     public static final String EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS = "El carro ya está reservado para las fechas seleccionadas";
+    public static final int PORCENTAJE_AUMENTO_FINES_SEMANA = 10;
     private final RepositorioReserva repositorioReserva;
 
     public ServicioCrearReserva(RepositorioReserva repositorioReserva) {
@@ -52,7 +53,7 @@ public class ServicioCrearReserva {
         long diasEntreSemana = diasReserva - diasFinesSemana;
 
         double valorEntreSemana = valorCarro * diasEntreSemana;
-        double valorFinesDeSemana = NumberUtils.sumarPorcentaje(valorCarro, 10) * diasFinesSemana;
+        double valorFinesDeSemana = NumberUtils.sumarPorcentaje(valorCarro, PORCENTAJE_AUMENTO_FINES_SEMANA) * diasFinesSemana;
 
         return valorEntreSemana + valorFinesDeSemana;
     }

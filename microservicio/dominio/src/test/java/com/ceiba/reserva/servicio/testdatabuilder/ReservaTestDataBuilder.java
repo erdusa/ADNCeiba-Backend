@@ -11,6 +11,7 @@ public class ReservaTestDataBuilder {
     private Long idCarro;
     private LocalDateTime fechaInicial;
     private LocalDateTime fechaFinal;
+    private Double valor;
 
     public ReservaTestDataBuilder() {
 
@@ -19,6 +20,7 @@ public class ReservaTestDataBuilder {
         this.idCarro = 1L;
         this.fechaInicial = LocalDateTime.now();
         this.fechaFinal = fechaInicial.plusDays(1);
+        this.valor = 1000d;
     }
 
     public ReservaTestDataBuilder conCliente(Long idCliente) {
@@ -41,7 +43,14 @@ public class ReservaTestDataBuilder {
         return this;
     }
 
+    public ReservaTestDataBuilder conValor(Double valor) {
+        this.valor = valor;
+        return this;
+    }
+
     public Reserva build() {
-        return new Reserva(id, idCliente, idCarro, fechaInicial, fechaFinal);
+        Reserva reserva = new Reserva(id, idCliente, idCarro, fechaInicial, fechaFinal);
+        reserva.setValor(valor);
+        return reserva;
     }
 }

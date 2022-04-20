@@ -20,7 +20,6 @@ public class Reserva {
     public static final String NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS = "No se puede hacer la reserva por mas de 7 días";
     public static final String DEBE_INGRESAR_EL_VALOR = "Debe ingresar el valor";
     public static final String EL_VALOR_DEBE_SER_MAYOR_QUE_CERO = "El valor debe ser mayor que cero";
-    public static final String DEBE_INGRESAR_EL_ESTADO = "Debe ingresar el estado";
     private Long id;
     private Long idCliente;
     private Long idCarro;

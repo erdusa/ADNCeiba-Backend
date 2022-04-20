@@ -19,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServicioCrearReservaTest {
 
+    public static final String DEBE_INGRESAR_EL_VALOR = "Debe ingresar el valor";
+    public static final String EL_VALOR_DEBE_SER_MAYOR_QUE_CERO = "El valor debe ser mayor que cero";
+    public static final String EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS = "El carro ya está reservado para las fechas seleccionadas";
+
     private RepositorioReserva repositorioReserva;
     private ServicioCrearReserva servicioCrearReserva;
 
@@ -55,7 +59,7 @@ class ServicioCrearReservaTest {
                 .thenReturn(null);
         // act - assert
         BasePrueba.assertThrows(() -> servicioCrearReserva.ejecutar(reserva), ExcepcionDuplicidad.class,
-                ServicioCrearReserva.EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS);
+                EL_CARRO_YA_ESTA_RESERVADO_PARA_LAS_FECHAS_SELECCIONADAS);
         Mockito.verify(repositorioReserva, Mockito.times(0))
                 .crear(reserva);
         Mockito.verify(repositorioReserva, Mockito.times(1))
