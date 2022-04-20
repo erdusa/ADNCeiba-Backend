@@ -22,7 +22,7 @@ pipeline {
             echo "------------>Checkout<------------"
             checkout([
                 $class: 'GitSCM',
-                branches: [[name: '*/master']],
+                branches: [[name: '*/main']],
                 doGenerateSubmoduleConfigurations: false,
                 extensions: [],
                 gitTool: 'Default',
