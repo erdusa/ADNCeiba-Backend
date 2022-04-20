@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Repository
@@ -59,7 +60,7 @@ public class RepositorioReservaPostgreSQL implements RepositorioReserva {
         try {
             return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerCarroSiNoEstaReservado, paramSource, new MapeoCarro());
         } catch (EmptyResultDataAccessException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.log(Level.INFO, "El carro no está disponible", e);
         }
         return null;
     }
