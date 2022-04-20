@@ -5,7 +5,7 @@ public class NumberUtils {
     private NumberUtils() {
     }
 
-    public static double incrementarPorcentajeAValor(double valor, double porcentaje) {
+    public static double sumarPorcentaje(double valor, double porcentaje) {
         return valor + valor * porcentaje / 100;
     }
 

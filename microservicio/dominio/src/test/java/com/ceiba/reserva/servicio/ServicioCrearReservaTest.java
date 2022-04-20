@@ -85,7 +85,7 @@ class ServicioCrearReservaTest {
     }
 
     @Test
-    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamMedia() {
+    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamaMedia() {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(2);
@@ -107,7 +107,7 @@ class ServicioCrearReservaTest {
     }
 
     @Test
-    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamBaja() {
+    void deberiaCalcularValorCorrectoSinFinesDeSemanaParaGamaBaja() {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(3);
@@ -129,7 +129,7 @@ class ServicioCrearReservaTest {
     }
 
     @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamAlta() {
+    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamaAlta() {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(7);
@@ -151,7 +151,7 @@ class ServicioCrearReservaTest {
     }
 
     @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamMedia() {
+    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamaMedia() {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(7);
@@ -173,7 +173,7 @@ class ServicioCrearReservaTest {
     }
 
     @Test
-    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamBaja() {
+    void deberiaCalcularValorCorrectoConFinesDeSemanaParaGamaBaja() {
         // arrange
         LocalDateTime fechaInicial = obtenerFechaProximoLunes();
         LocalDateTime fechaFinal = fechaInicial.plusDays(6);

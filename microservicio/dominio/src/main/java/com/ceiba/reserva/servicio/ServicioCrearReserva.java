@@ -8,7 +8,7 @@ import com.ceiba.reserva.modelo.entidad.Reserva;
 import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -24,7 +24,12 @@ public class ServicioCrearReserva {
     public Long ejecutar(Reserva reserva) {
         Carro carro = obtenerCarroSiNoEstaReservado(reserva);
 
-        double valorReserva = this.calcularValorReserva(reserva.getFechaInicial(), reserva.getFechaFinal(), carro.getGama().valor);
+        double valorReserva = this.calcularValorReserva(
+                reserva.getFechaInicial().toLocalDate(),
+                reserva.getFechaFinal().toLocalDate(),
+                carro.getGama().valor
+        );
+
         reserva.setValor(valorReserva);
 
         return repositorioReserva.crear(reserva);
@@ -41,13 +46,19 @@ public class ServicioCrearReserva {
         return carro;
     }
 
-    private double calcularValorReserva(LocalDateTime fechaInicial, LocalDateTime fechaFinal, Double valorCarro) {
-        long diasReserva = DAYS.between(fechaInicial.toLocalDate(), fechaFinal.toLocalDate());
-        int diasFinesSemana = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.SATURDAY, fechaInicial, fechaFinal)
-                + DateUtils.obtenerCantidadDiaSemana(DayOfWeek.SUNDAY, fechaInicial, fechaFinal);
+    private double calcularValorReserva(LocalDate fechaInicial, LocalDate fechaFinal, Double valorCarro) {
+        long diasReserva = DAYS.between(fechaInicial, fechaFinal);
+        int diasFinesSemana = calcularFinesDeSemanaSinIncluirFechaEntrega(fechaInicial, fechaFinal);
         long diasEntreSemana = diasReserva - diasFinesSemana;
+
         double valorEntreSemana = valorCarro * diasEntreSemana;
-        double valorFinesDeSemana = NumberUtils.incrementarPorcentajeAValor(valorCarro, 10) * diasFinesSemana;
+        double valorFinesDeSemana = NumberUtils.sumarPorcentaje(valorCarro, 10) * diasFinesSemana;
+
         return valorEntreSemana + valorFinesDeSemana;
+    }
+
+    private int calcularFinesDeSemanaSinIncluirFechaEntrega(LocalDate fechaInicial, LocalDate fechaFinal) {
+        return DateUtils.obtenerCantidadDiaSemana(DayOfWeek.SATURDAY, fechaInicial, fechaFinal.minusDays(1))
+                + DateUtils.obtenerCantidadDiaSemana(DayOfWeek.SUNDAY, fechaInicial, fechaFinal.minusDays(1));
     }
 }

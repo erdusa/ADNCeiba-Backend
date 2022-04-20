@@ -1,15 +1,15 @@
 package com.ceiba.comun;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class DateUtils {
     private DateUtils() {
     }
 
-    public static int obtenerCantidadDiaSemana(DayOfWeek dia, LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+    public static int obtenerCantidadDiaSemana(DayOfWeek dia, LocalDate fechaInicial, LocalDate fechaFinal) {
         int cantidadDias = 0;
-        while (fechaInicial.isBefore(fechaFinal)) {
+        while (!fechaInicial.isAfter(fechaFinal)) {
             if (fechaInicial.getDayOfWeek().equals(dia)) {
                 cantidadDias++;
             }
