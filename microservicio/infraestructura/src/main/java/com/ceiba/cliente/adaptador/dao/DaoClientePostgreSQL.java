@@ -12,7 +12,7 @@ public class DaoClientePostgreSQL implements DaoCliente {
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
     @SqlStatement(namespace = "cliente", value = "consultarPorDocumento")
-    private String sqlConsultarCliente;
+    private static String sqlConsultarCliente;
 
     public DaoClientePostgreSQL(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
         this.customNamedParameterJdbcTemplate = customNamedParameterJdbcTemplate;

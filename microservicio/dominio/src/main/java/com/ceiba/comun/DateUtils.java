@@ -3,7 +3,7 @@ package com.ceiba.comun;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class DateUtils {
+public final class DateUtils {
     private DateUtils() {
     }
 

@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 @Repository
 public class RepositorioReservaPostgreSQL implements RepositorioReserva {
@@ -24,6 +25,7 @@ public class RepositorioReservaPostgreSQL implements RepositorioReserva {
     @SqlStatement(namespace = "reserva", value = "obtenerCarroSiNoEstaReservado")
     private static String sqlObtenerCarroSiNoEstaReservado;
 
+    private static final Logger LOGGER = Logger.getLogger(RepositorioReservaPostgreSQL.class.getName());
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
     public RepositorioReservaPostgreSQL(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
@@ -57,7 +59,8 @@ public class RepositorioReservaPostgreSQL implements RepositorioReserva {
         try {
             return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerCarroSiNoEstaReservado, paramSource, new MapeoCarro());
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            LOGGER.info(e.getMessage());
         }
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package com.ceiba.comun;
 
-public class NumberUtils {
+public final class NumberUtils {
 
     private NumberUtils() {
     }
