@@ -50,8 +50,8 @@ class ComandoControladorReservaTest {
         // arrange
         ComandoReserva comandoReserva = new ComandoReservaTestDataBuilder()
                 .conIdCarro(2L)
-                .conFechaInicial(LocalDateTime.of(2022,4,20,7,0))
-                .conFechaFinal(LocalDateTime.of(2022,4,21,7,0))
+                .conFechaInicial(LocalDateTime.of(3022,4,20,7,0))
+                .conFechaFinal(LocalDateTime.of(3022,4,21,7,0))
                 .build();
         // act -assert
         mocMvc.perform(post("/reservas")
@@ -64,8 +64,8 @@ class ComandoControladorReservaTest {
     @Test
     void deberiaCancelarReserva() throws Exception {
         // arrange
-        //con el id=1 genera error ya que solo se puede cancelar la reserva 2 dias antes y maximo hasta las 7 pm
-        Long id = 2L;
+        //usamos el primero que tiene fecha para el 3022
+        Long id = 1L;
         // act -assert
         mocMvc.perform(put("/reservas/cancelar/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
