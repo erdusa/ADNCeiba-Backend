@@ -13,10 +13,10 @@ public class CarroTestDataBuilder {
 
     public CarroTestDataBuilder() {
         this.id = 1L;
-        this.marca = "RENAULT";
+        this.marca = "MERCEDES";
         this.modelo = 2022;
         this.placa = "123";
-        this.gama = EnumGama.MEDIA;
+        this.gama = EnumGama.ALTA;
     }
 
     public CarroTestDataBuilder conGama(EnumGama gama) {

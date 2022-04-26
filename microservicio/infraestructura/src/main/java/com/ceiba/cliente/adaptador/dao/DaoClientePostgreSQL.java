@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DaoClientePostgreSQL implements DaoCliente {
 
-    private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
     @SqlStatement(namespace = "cliente", value = "consultarPorDocumento")
     private static String sqlConsultarCliente;
+    private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
     public DaoClientePostgreSQL(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
         this.customNamedParameterJdbcTemplate = customNamedParameterJdbcTemplate;

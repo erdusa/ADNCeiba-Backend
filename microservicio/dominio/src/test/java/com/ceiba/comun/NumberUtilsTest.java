@@ -2,7 +2,7 @@ package com.ceiba.comun;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NumberUtilsTest {
 
@@ -29,6 +29,7 @@ class NumberUtilsTest {
         assertEquals(13.2, valorRetornado4);
 
     }
+
     @Test
     void deberiaSerSumarBienCientoPorCiento() {
         // arrange - act

@@ -1,6 +1,5 @@
 package com.ceiba.reserva.puerto.repositorio;
 
-import com.ceiba.carro.modelo.entidad.Carro;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 
 import java.time.LocalDate;
@@ -38,5 +37,5 @@ public interface RepositorioReserva {
      * @param fechaFinal   fecha final solicitada para la reserva
      * @return los datos del carro
      */
-    Carro obtenerCarroSiNoEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
+    boolean verificarSiCarroEstaReservado(Long idCarro, LocalDate fechaInicial, LocalDate fechaFinal);
 }
