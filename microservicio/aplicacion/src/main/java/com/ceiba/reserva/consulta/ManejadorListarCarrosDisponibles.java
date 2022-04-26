@@ -1,7 +1,7 @@
 package com.ceiba.reserva.consulta;
 
 import com.ceiba.carro.enums.EnumGama;
-import com.ceiba.carro.modelo.dto.DtoCarro;
+import com.ceiba.reserva.modelo.dto.DtoCarroDisponible;
 import com.ceiba.reserva.puerto.dao.DaoReserva;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class ManejadorListarCarrosDisponibles {
         this.daoReserva = daoReserva;
     }
 
-    public List<DtoCarro> ejecutar(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
+    public List<DtoCarroDisponible> ejecutar(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
         return this.daoReserva.listarCarrosDisponibles(fechaInicial, fechaFinal, gama);
     }
 }

@@ -1,6 +1,6 @@
 package com.ceiba.reserva.consulta;
 
-import com.ceiba.reserva.modelo.dto.DtoReserva;
+import com.ceiba.reserva.modelo.dto.DtoReservaVigente;
 import com.ceiba.reserva.puerto.dao.DaoReserva;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class ManejadorListarPorCliente {
         this.daoReserva = daoReserva;
     }
 
-    public List<DtoReserva> ejecutar(Long idCliente) {
-        return this.daoReserva.listarPorCliente(idCliente);
+    public List<DtoReservaVigente> ejecutar(Long idCliente) {
+        return this.daoReserva.listarVigentesPorCliente(idCliente);
     }
 }

@@ -1,8 +1,8 @@
 package com.ceiba.reserva.puerto.dao;
 
 import com.ceiba.carro.enums.EnumGama;
-import com.ceiba.carro.modelo.dto.DtoCarro;
-import com.ceiba.reserva.modelo.dto.DtoReserva;
+import com.ceiba.reserva.modelo.dto.DtoCarroDisponible;
+import com.ceiba.reserva.modelo.dto.DtoReservaVigente;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +15,7 @@ public interface DaoReserva {
      * @param idCliente identificador del cliente
      * @return las reservas para el cliente
      */
-    List<DtoReserva> listarPorCliente(Long idCliente);
+    List<DtoReservaVigente> listarVigentesPorCliente(Long idCliente);
 
     /**
      * Permite listar los carros disponibles para la gama y fechas seleccionadas
@@ -25,5 +25,5 @@ public interface DaoReserva {
      * @param gama         gama del carro solicitado
      * @return la lista de carros disponibles para los criterios ingresados
      */
-    List<DtoCarro> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama);
+    List<DtoCarroDisponible> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama);
 }

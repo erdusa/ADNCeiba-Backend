@@ -1,15 +1,14 @@
-package com.ceiba.carro.modelo.dto;
+package com.ceiba.reserva.modelo.dto;
 
-import com.ceiba.carro.enums.EnumGama;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DtoCarro {
-    private Long id;
+public class DtoCarroDisponible {
+    private Long idCarro;
     private String marca;
     private Integer modelo;
     private String placa;
-    private EnumGama gama;
+    private Double valor;
 }

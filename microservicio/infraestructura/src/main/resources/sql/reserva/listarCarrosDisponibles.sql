@@ -12,7 +12,7 @@ as (
 		or  date_trunc('day', re.fechafinal) between :fechainicial and :fechafinal
 		)
 	)
-select *
+select c.*, :fechainicial fechainicial, :fechafinal fechafinal
 from carro c
 left join carros_reservados care using(id)
 where c.gama = :gama

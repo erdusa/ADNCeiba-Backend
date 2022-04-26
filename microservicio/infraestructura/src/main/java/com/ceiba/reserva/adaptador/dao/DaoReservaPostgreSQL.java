@@ -1,11 +1,10 @@
 package com.ceiba.reserva.adaptador.dao;
 
-import com.ceiba.carro.adaptador.dao.MapeoDtoCarro;
 import com.ceiba.carro.enums.EnumGama;
-import com.ceiba.carro.modelo.dto.DtoCarro;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
-import com.ceiba.reserva.modelo.dto.DtoReserva;
+import com.ceiba.reserva.modelo.dto.DtoCarroDisponible;
+import com.ceiba.reserva.modelo.dto.DtoReservaVigente;
 import com.ceiba.reserva.puerto.dao.DaoReserva;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -28,20 +27,20 @@ public class DaoReservaPostgreSQL implements DaoReserva {
     }
 
     @Override
-    public List<DtoReserva> listarPorCliente(Long idCliente) {
+    public List<DtoReservaVigente> listarVigentesPorCliente(Long idCliente) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("idCliente", idCliente);
 
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarPorCliente, paramSource, new MapeoDtoReserva());
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarPorCliente, paramSource, new MapeoDtoReservaVigente());
     }
 
     @Override
-    public List<DtoCarro> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
+    public List<DtoCarroDisponible> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("fechainicial", fechaInicial);
         paramSource.addValue("fechafinal", fechaFinal);
         paramSource.addValue("gama", gama.toString());
 
-        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarCarrosDisponibles, paramSource, new MapeoDtoCarro());
+        return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlListarCarrosDisponibles, paramSource, new MapeoDtoCarroDisponible());
     }
 }

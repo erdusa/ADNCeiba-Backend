@@ -33,7 +33,7 @@ public class MapeoReserva implements RowMapper<Reserva>, MapperResult {
         paramSource.addValue("fechaInicial", reserva.getFechaInicial());
         paramSource.addValue("fechaFinal", reserva.getFechaFinal());
         paramSource.addValue("valor", reserva.getValor());
-        paramSource.addValue("estado", reserva.getEstado());
+        paramSource.addValue("estado", reserva.getEstado().toString());
         return paramSource;
     }
 
