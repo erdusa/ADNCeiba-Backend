@@ -5,7 +5,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-import static com.ceiba.dominio.ValidadorArgumento.*;
+import static com.ceiba.dominio.ValidadorArgumento.validarMenor;
+import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Getter
@@ -18,42 +19,78 @@ public class Reserva {
     public static final String LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL = "La fecha inicial debe ser mayor a la fecha actual";
     public static final String LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL = "La fecha inicial no puede ser mayor a la fecha final";
     public static final String NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS = "No se puede hacer la reserva por mas de 7 días";
-    public static final String DEBE_INGRESAR_EL_VALOR = "Debe ingresar el valor";
-    public static final String EL_VALOR_DEBE_SER_MAYOR_QUE_CERO = "El valor debe ser mayor que cero";
+    public static final int PORCENTAJE_AUMENTO_FINES_SEMANA = 10;
+
     private Long id;
     private Long idCliente;
     private Long idCarro;
     private LocalDateTime fechaInicial;
     private LocalDateTime fechaFinal;
     private Double valor;
-    private String estado;
+    private EnumEstadoReserva estado;
 
-    public Reserva(Long id, Long idCliente, Long idCarro, LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
-        validarObligatorio(idCliente, DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
-        validarObligatorio(idCarro, DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
-        validarObligatorio(fechaInicial, DEBE_INGRESAR_LA_FECHA_INICIAL);
-        validarMenor(LocalDateTime.now(), fechaInicial, LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL);
-        validarObligatorio(fechaFinal, DEBE_INGRESAR_LA_FECHA_FINAL);
-        validarMenor(fechaInicial, fechaFinal, LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL);
-        validarMaximo7DiasReserva(fechaInicial, fechaFinal);
+    private Reserva(Long id, Cliente cliente, Carro carro, LocalDateTime fechaInicial, LocalDateTime fechaFinal, Double valor, EnumEstadoReserva estado) {
 
         this.id = id;
-        this.idCliente = idCliente;
-        this.idCarro = idCarro;
+        this.cliente = cliente;
+        this.carro = carro;
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
-        this.estado = EnumEstadoReserva.VIGENTE.toString();
-    }
-    public void setValor(Double valor) {
-        validarObligatorio(valor, DEBE_INGRESAR_EL_VALOR);
-        validarPositivo(valor, EL_VALOR_DEBE_SER_MAYOR_QUE_CERO);
         this.valor = valor;
+        this.estado = estado;
     }
 
-    private void validarMaximo7DiasReserva(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+    public static Reserva crear(SolicitudReserva solicitudReserva) {
+
+        validarObligatorio(solicitudReserva.getCliente(), DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
+        validarObligatorio(solicitudReserva.getCliente().getId(), DEBE_INGRESAR_UN_CLIENTE_EXISTENTE);
+        validarObligatorio(solicitudReserva.getCarro(), DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
+        validarObligatorio(solicitudReserva.getCarro().getId(), DEBE_SELECCIONAR_UN_CARRO_EXISTENTE);
+        validarObligatorio(solicitudReserva.getFechaInicial(), DEBE_INGRESAR_LA_FECHA_INICIAL);
+        validarMenor(LocalDateTime.now(), solicitudReserva.getFechaInicial(), LA_FECHA_INICIAL_DEBE_SER_MAYOR_A_LA_FECHA_ACTUAL);
+        validarObligatorio(solicitudReserva.getFechaFinal(), DEBE_INGRESAR_LA_FECHA_FINAL);
+        validarMenor(solicitudReserva.getFechaInicial(), solicitudReserva.getFechaFinal(), LA_FECHA_INICIAL_NO_PUEDE_SER_MAYOR_A_LA_FECHA_FINAL);
+        validarMaximo7DiasReserva(solicitudReserva.getFechaInicial(), solicitudReserva.getFechaFinal());
+
+        Long id = 0L;
+        Double valor = calcularValorReserva(
+                solicitudReserva.getCarro().getGama().valor,
+                solicitudReserva.getFechaInicial(),
+                solicitudReserva.getFechaFinal()
+        );
+
+        EnumEstadoReserva estado = EnumEstadoReserva.VIGENTE;
+
+        return new Reserva(
+                id,
+                solicitudReserva.getCliente(),
+                solicitudReserva.getCarro(),
+                solicitudReserva.getFechaInicial(),
+                solicitudReserva.getFechaFinal(),
+                valor,
+                estado
+        );
+    }
+
+    public static Reserva reconstruir(Long id, Cliente cliente, Carro carro, LocalDateTime fechaInicial,
+                                      LocalDateTime fechaFinal, Double valor, EnumEstadoReserva estado) {
+        return new Reserva(id, cliente, carro, fechaInicial, fechaFinal, valor, estado);
+    }
+
+    private static double calcularValorReserva(Double valorCarro, LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        long diasReserva = DAYS.between(fechaInicial, fechaFinal);
+        int diasFinesSemana = calcularFinesDeSemanaSinIncluirFechaEntrega(fechaInicial, fechaFinal);
+        long diasEntreSemana = diasReserva - diasFinesSemana;
+
+        double valorEntreSemana = valorCarro * diasEntreSemana;
+        double valorFinesDeSemana = NumberUtils.sumarPorcentaje(valorCarro, PORCENTAJE_AUMENTO_FINES_SEMANA) * diasFinesSemana;
+
+        return valorEntreSemana + valorFinesDeSemana;
+    }
+
+    private static void validarMaximo7DiasReserva(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         long diasReserva = DAYS.between(fechaInicial, fechaFinal);
         validarMenor(diasReserva, 7L, NO_SE_PUEDE_HACER_LA_RESERVA_POR_MAS_DE_7_DIAS);
     }
-
 
 }

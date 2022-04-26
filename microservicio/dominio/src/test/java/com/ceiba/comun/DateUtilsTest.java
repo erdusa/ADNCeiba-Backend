@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DateUtilsTest {
 
     @Test
     void deberiaDevolver5SabadosIniciandoEnSabadoYTerminandoEnSabado() {
         // arrange
-        LocalDate fechaInicial = LocalDate.of(2022,4,2);
-        LocalDate fechaFinal = LocalDate.of(2022,4,30);
+        LocalDate fechaInicial = LocalDate.of(2022, 4, 2);
+        LocalDate fechaFinal = LocalDate.of(2022, 4, 30);
         // act
         int valorRetornado = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.SATURDAY, fechaInicial, fechaFinal);
         // assert
@@ -23,8 +23,8 @@ class DateUtilsTest {
     @Test
     void deberiaDevolver1DiaDeCadaDiaEnUnaSemana() {
         // arrange
-        LocalDate fechaInicial = LocalDate.of(2022,4,4);
-        LocalDate fechaFinal = LocalDate.of(2022,4,10);
+        LocalDate fechaInicial = LocalDate.of(2022, 4, 4);
+        LocalDate fechaFinal = LocalDate.of(2022, 4, 10);
         // act
         int cantidadLunes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.MONDAY, fechaInicial, fechaFinal);
         int cantidadMartes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.TUESDAY, fechaInicial, fechaFinal);
@@ -46,8 +46,8 @@ class DateUtilsTest {
     @Test
     void deberiaDevolverLosDiasCorrectosEnUnMes() {
         // arrange
-        LocalDate fechaInicial = LocalDate.of(2022,4,1);
-        LocalDate fechaFinal = LocalDate.of(2022,4,30);
+        LocalDate fechaInicial = LocalDate.of(2022, 4, 1);
+        LocalDate fechaFinal = LocalDate.of(2022, 4, 30);
         // act
         int cantidadLunes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.MONDAY, fechaInicial, fechaFinal);
         int cantidadMartes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.TUESDAY, fechaInicial, fechaFinal);
@@ -69,8 +69,8 @@ class DateUtilsTest {
     @Test
     void deberiaDevolverUnoSoloParaunDiaCuandoFechaInicialIgualAFechaFinal() {
         // arrange
-        LocalDate fechaInicial = LocalDate.of(2022,4,1);
-        LocalDate fechaFinal = LocalDate.of(2022,4,1);
+        LocalDate fechaInicial = LocalDate.of(2022, 4, 1);
+        LocalDate fechaFinal = LocalDate.of(2022, 4, 1);
         // act
         int cantidadLunes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.MONDAY, fechaInicial, fechaFinal);
         int cantidadMartes = DateUtils.obtenerCantidadDiaSemana(DayOfWeek.TUESDAY, fechaInicial, fechaFinal);

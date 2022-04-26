@@ -50,8 +50,8 @@ class ComandoControladorReservaTest {
         // arrange
         ComandoReserva comandoReserva = new ComandoReservaTestDataBuilder()
                 .conIdCarro(2L)
-                .conFechaInicial(LocalDateTime.of(3022,4,20,7,0))
-                .conFechaFinal(LocalDateTime.of(3022,4,21,7,0))
+                .conFechaInicial(LocalDateTime.of(3022, 4, 20, 7, 0))
+                .conFechaFinal(LocalDateTime.of(3022, 4, 21, 7, 0))
                 .build();
         // act -assert
         mocMvc.perform(post("/reservas")

@@ -29,7 +29,7 @@ class ConsultaControladorClienteTest {
     void deberiaConsultarCliente() throws Exception {
         // arrange
         // act - assert
-        mockMvc.perform(get("/clientes/8000")
+        mockMvc.perform(get("/clientes/{documento}", "8000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("documento", is("8000")))
