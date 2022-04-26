@@ -15,7 +15,7 @@ import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Getter
-public class Reserva {
+public final class Reserva {
 
     public static final String DEBE_INGRESAR_UN_CLIENTE_EXISTENTE = "Debe ingresar un cliente existente";
     public static final String DEBE_SELECCIONAR_UN_CARRO_EXISTENTE = "Debe seleccionar un carro existente";
