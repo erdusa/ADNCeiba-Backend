@@ -9,7 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -33,9 +33,8 @@ public class ConsultaControladorReserva {
     }
 
     @GetMapping("/carros-disponibles")
-    public List<DtoCarroDisponible> listarCarrosDisponibles(@RequestParam String fechaInicial, @RequestParam String fechaFinal, @RequestParam EnumGama gama) {
-        LocalDate fFechaInicial = LocalDate.parse(fechaInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        LocalDate fFechaFinal = LocalDate.parse(fechaFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return this.manejadorListarCarrosDisponibles.ejecutar(fFechaInicial, fFechaFinal, gama);
+    public List<DtoCarroDisponible> listarCarrosDisponibles(@RequestParam String fechaInicial, @RequestParam Integer dias, @RequestParam EnumGama gama) {
+        LocalDateTime fFechaInicial = LocalDateTime.parse(fechaInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return this.manejadorListarCarrosDisponibles.ejecutar(fFechaInicial, dias, gama);
     }
 }

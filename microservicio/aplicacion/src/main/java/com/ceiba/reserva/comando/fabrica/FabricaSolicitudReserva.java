@@ -8,6 +8,8 @@ import com.ceiba.reserva.comando.ComandoReserva;
 import com.ceiba.reserva.modelo.entidad.SolicitudReserva;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class FabricaSolicitudReserva {
 
@@ -23,10 +25,11 @@ public class FabricaSolicitudReserva {
     public SolicitudReserva crear(ComandoReserva comandoReserva) {
         Carro carro = this.repositorioCarro.consultar(comandoReserva.getIdCarro());
         Cliente cliente = this.repositorioCliente.consultar(comandoReserva.getIdCliente());
+        LocalDateTime fechaFinal = comandoReserva.getFechaInicial().plusDays(comandoReserva.getDias());
 
         return new SolicitudReserva(
                 comandoReserva.getFechaInicial(),
-                comandoReserva.getFechaFinal(),
+                fechaFinal,
                 cliente,
                 carro
         );

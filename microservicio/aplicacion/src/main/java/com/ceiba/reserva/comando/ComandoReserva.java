@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 @Generated
 public class ComandoReserva {
 
-    private Long id;
     private Long idCliente;
     private Long idCarro;
     private LocalDateTime fechaInicial;
-    private LocalDateTime fechaFinal;
+    private Integer dias;
 
 }

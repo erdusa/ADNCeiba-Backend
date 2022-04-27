@@ -6,18 +6,16 @@ import java.time.LocalDateTime;
 
 public class ComandoReservaTestDataBuilder {
 
-    private Long id;
     private Long idCliente;
     private Long idCarro;
     private LocalDateTime fechaInicial;
-    private LocalDateTime fechaFinal;
+    private Integer dias;
 
     public ComandoReservaTestDataBuilder() {
-        this.id = 1L;
         this.idCliente = 1L;
         this.idCarro = 1L;
         this.fechaInicial = LocalDateTime.now();
-        this.fechaFinal = fechaInicial.plusDays(1);
+        this.dias = 1;
     }
 
     public ComandoReservaTestDataBuilder conIdCarro(Long idCarro) {
@@ -30,18 +28,17 @@ public class ComandoReservaTestDataBuilder {
         return this;
     }
 
-    public ComandoReservaTestDataBuilder conFechaFinal(LocalDateTime fechaFinal) {
-        this.fechaFinal = fechaFinal;
+    public ComandoReservaTestDataBuilder conDias(Integer dias) {
+        this.dias = dias;
         return this;
     }
 
     public ComandoReserva build() {
         return new ComandoReserva(
-                this.id,
                 this.idCliente,
                 this.idCarro,
                 this.fechaInicial,
-                this.fechaFinal
+                this.dias
         );
     }
 }

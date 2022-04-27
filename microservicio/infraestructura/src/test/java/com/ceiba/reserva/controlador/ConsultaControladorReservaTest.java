@@ -33,7 +33,7 @@ class ConsultaControladorReservaTest {
         mockMvc.perform(get("/reservas/cliente/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].fechaInicial", is("3022-04-20 07:00:00")))
                 .andExpect(jsonPath("$[0].fechaFinal", is("3022-04-21 07:00:00")))
                 .andExpect(jsonPath("$[0].marca", is("FORD")))
@@ -48,7 +48,7 @@ class ConsultaControladorReservaTest {
     void deberiaListarLosCarrosGamaAltaDisponibles() throws Exception {
         // arrange
         // act - assert
-        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=20/04/2022&fechaFinal=22/04/2022&gama=ALTA")
+        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=20/04/2022 00:00&dias=2&gama=ALTA")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -75,7 +75,7 @@ class ConsultaControladorReservaTest {
     void deberiaListarLosCarrosGamaMediaDisponibles() throws Exception {
         // arrange
         // act - assert
-        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022&fechaFinal=20/04/2022&gama=MEDIA")
+        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022 00:00&dias=1&gama=MEDIA")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -92,7 +92,7 @@ class ConsultaControladorReservaTest {
     void deberiaListarLosCarrosGamaBajaDisponibles() throws Exception {
         // arrange
         // act - assert
-        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022&fechaFinal=20/04/2023&gama=BAJA")
+        mockMvc.perform(get("/reservas/carros-disponibles?fechaInicial=19/04/2022 00:00&dias=365&gama=BAJA")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -100,7 +100,7 @@ class ConsultaControladorReservaTest {
                 .andExpect(jsonPath("$[0].marca", is("RENAULT")))
                 .andExpect(jsonPath("$[0].modelo", is(2020)))
                 .andExpect(jsonPath("$[0].placa", is("123")))
-                .andExpect(jsonPath("$[0].valor", is(18_820D)))
+                .andExpect(jsonPath("$[0].valor", is(18_770D)))
         ;
 
     }

@@ -4,7 +4,7 @@ import com.ceiba.carro.enums.EnumGama;
 import com.ceiba.reserva.modelo.dto.DtoCarroDisponible;
 import com.ceiba.reserva.modelo.dto.DtoReservaVigente;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DaoReserva {
@@ -25,5 +25,5 @@ public interface DaoReserva {
      * @param gama         gama del carro solicitado
      * @return la lista de carros disponibles para los criterios ingresados
      */
-    List<DtoCarroDisponible> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama);
+    List<DtoCarroDisponible> listarCarrosDisponibles(LocalDateTime fechaInicial, LocalDateTime fechaFinal, EnumGama gama);
 }

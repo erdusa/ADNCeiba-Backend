@@ -9,13 +9,13 @@ import com.ceiba.reserva.puerto.dao.DaoReserva;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
 public class DaoReservaPostgreSQL implements DaoReserva {
 
-    @SqlStatement(namespace = "reserva", value = "listarPorCliente.sql")
+    @SqlStatement(namespace = "reserva", value = "listarVigentesPorCliente.sql")
     private static String sqlListarPorCliente;
     @SqlStatement(namespace = "reserva", value = "listarCarrosDisponibles")
     private static String sqlListarCarrosDisponibles;
@@ -35,7 +35,7 @@ public class DaoReservaPostgreSQL implements DaoReserva {
     }
 
     @Override
-    public List<DtoCarroDisponible> listarCarrosDisponibles(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
+    public List<DtoCarroDisponible> listarCarrosDisponibles(LocalDateTime fechaInicial, LocalDateTime fechaFinal, EnumGama gama) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("fechainicial", fechaInicial);
         paramSource.addValue("fechafinal", fechaFinal);

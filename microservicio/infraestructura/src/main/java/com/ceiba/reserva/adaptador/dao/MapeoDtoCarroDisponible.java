@@ -24,6 +24,6 @@ public class MapeoDtoCarroDisponible implements RowMapper<DtoCarroDisponible>, M
 
         Double valor = CalcularValorReserva.ejecutar(gama.valor, fechaInicial, fechaFinal);
 
-        return new DtoCarroDisponible(id, marca, modelo, placa, valor);
+        return new DtoCarroDisponible(fechaInicial, fechaFinal, id, marca, modelo, placa, valor);
     }
 }

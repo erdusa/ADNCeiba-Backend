@@ -5,7 +5,7 @@ import com.ceiba.reserva.modelo.dto.DtoCarroDisponible;
 import com.ceiba.reserva.puerto.dao.DaoReserva;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -17,7 +17,8 @@ public class ManejadorListarCarrosDisponibles {
         this.daoReserva = daoReserva;
     }
 
-    public List<DtoCarroDisponible> ejecutar(LocalDate fechaInicial, LocalDate fechaFinal, EnumGama gama) {
+    public List<DtoCarroDisponible> ejecutar(LocalDateTime fechaInicial, Integer dias, EnumGama gama) {
+        LocalDateTime fechaFinal = fechaInicial.plusDays(dias);
         return this.daoReserva.listarCarrosDisponibles(fechaInicial, fechaFinal, gama);
     }
 }
