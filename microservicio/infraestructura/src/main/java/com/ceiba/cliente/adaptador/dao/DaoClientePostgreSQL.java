@@ -28,7 +28,7 @@ public class DaoClientePostgreSQL implements DaoCliente {
         try {
             return customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlConsultarCliente, paramSource, new MapeoDtoCliente());
         } catch (EmptyResultDataAccessException e) {
-            throw new ExcepcionTecnica(NO_EXISTE_UN_CLIENTE_CON_ESE_DOCUMENTO);
+            throw new ExcepcionTecnica(NO_EXISTE_UN_CLIENTE_CON_ESE_DOCUMENTO, e);
         }
     }
 }
